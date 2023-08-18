@@ -1,0 +1,73 @@
+client:
+  registration:
+    name: supri-backend
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+server:
+  port: 8081
+
+spring:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    default-property-inclusion: NON_NULL
+  datasource:
+    driverClassName: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@ora-hmg.pjro.local:1521/supridev
+    username: supri
+    password: supridesenv
+
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+     ddl-auto: update
+     generate-ddl: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  flyway:
+    url: jdbc:oracle:thin:@ora-dev.pjro.local:1521/supridev
+    user: supri
+    password: supridesenv
+    baseline-on-migrate: false
+    validate-on-migrate: false
+    enabled: false
+
+    oracle:
+      sqlplus: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://sso.hmg.tjro.jus.br/auth/realms/PJRO
+          jwk-set-uri: https://sso.hmg.tjro.jus.br/auth/realms/PJRO/protocol/openid-connect/certs
+
+keycloak:
+  client-id: sij
+  token-uri: https://sso.hmg.tjro.jus.br/auth/realms/PJRO/protocol/openid-connect/token
+  logout-uri: https://sso.hmg.tjro.jus.br/auth/realms/PJRO/protocol/openid-connect/logout
+
+domain-list: http://localhost:4200
+
+logging.level.br.com.tjro.supribackend: INFO
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
+
+egesp-api:
+  sub: egespapi
+  mat: 00sonda
+  key: MjRJLBbd5vpL5
+  exp: 1740000
+
+
+
+

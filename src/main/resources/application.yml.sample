@@ -1,0 +1,58 @@
+client:
+  registration:
+    name: supri-backend
+
+server:
+  port: 8081
+  servlet:
+    context-path: ${APP_CONTEXT_PATH}
+
+spring:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    default-property-inclusion: NON_NULL
+  datasource:
+    driverClassName: oracle.jdbc.OracleDriver
+    url: ${JDBC_URL}
+    username: ${JDBC_USER}
+    password: ${JDBC_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+    ddl-auto: validate
+    generate-ddl: false
+
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+
+  flyway:
+    url: ${JDBC_URL}
+    user: ${JDBC_USER}
+    password: ${JDBC_PASSWORD}
+    baseline-on-migrate: false
+    validate-on-migrate: false
+    enabled: false
+
+    oracle:
+      sqlplus: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+          jwk-set-uri: ${KEYCLOAK_JWK_URI}
+
+keycloak:
+  client-id: ${KEYCLOAK_CLIENT_ID}
+  token-uri: ${KEYCLOAK_TOKEN_URI}
+  logout-uri: ${KEYCLOAK_LOGOUT_URI}
+
+domain-list: ${CORS_DOMAINS}
+egesp-api:
+  sub: ${EGESP_API_SUB}
+  mat: ${EGESP_API_MAT}
+  key: ${EGESP_API_KEY}
+  exp: ${EGESP_API_EXP}

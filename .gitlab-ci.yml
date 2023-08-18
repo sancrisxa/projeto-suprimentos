@@ -1,0 +1,28 @@
+image: maven:3.8.7-openjdk-18
+
+stages:
+  - build
+  - test
+  - metrics
+  - registro
+  - deploy
+
+variables:
+  MAVEN_REPO:  "-Dmaven.repo.local=.m2/repository"
+  REGISTRO_NOME: ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}
+
+cache:
+  paths:
+    - .m2/repository
+
+include:
+  - template: Jobs/Code-Quality.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - project: 'tjro/fabricasoftware/gitlab-ci/ci-cd'
+    ref: master
+    file:
+      - '/test-mvn.yaml'
+      - '/metrics.yaml'
+      - '/register.yaml'
+      - '/mvn.yaml'
+      - '/argocd-deploy-back.yaml'
